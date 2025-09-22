@@ -89,6 +89,8 @@ const Page = () => {
             payload[key] = value.replace(/\s+/g, "");
         }
 
+        delete payload.otp;
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`, {
                 method: 'POST',
