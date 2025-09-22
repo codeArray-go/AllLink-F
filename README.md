@@ -17,8 +17,10 @@ A responsive **Link-sharing platform frontend**. This frontend allows users to v
 - **Language:** JavaScript (ES6+)
 - **API Requests:** Fetch API / Axios (to backend)
 
+
 ## Project Structure
 
+``` 
 frontend/
 │
 ├─ /app/                         # Next.js App Router pages
@@ -29,10 +31,11 @@ frontend/
 │   ├─ /layout.js                # Main Page to Load Front-end.
 |   └─ /page.js                  # Home page of website.
 |
-|─ /components           # Reusable components (Navbar, Dropdown, Button, Footer).
-├─ /store                # Client-side state management (auth store)
-├─ /public               # Static assets (images, icons)
-└─ next.config.js        # Next.js configuration
+|─ /components                   # Reusable components (Navbar, Dropdown, Button, Footer).
+├─ /store                        # Client-side state management (auth store)
+├─ /public                       # Static assets (images, icons)
+└─ next.config.js                # Next.js configuration
+```
 
 
 ## Setup & Installation
