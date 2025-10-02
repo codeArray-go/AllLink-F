@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,10 +18,9 @@ export const metadata = {
   title: "AllLinks",
   description: "Paste your link to make it easy for others to find you on different plateform",
   icons: {
-    icon: "/Logo.svg",
+    icon: "/Hawk.svg",
   },
 };
-
 
 export default function RootLayout({ children }) {
 
@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
 
         <Navbar />
         {children}
+        <Loader />
         <Footer />
       </body>
 
