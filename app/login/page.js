@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
 import axios from 'axios';
 import { Eye, EyeOff } from "lucide-react";
+import UseLoader from '@/store/loaderStore';
+import { ToastContainer, toast } from "react-toastify";
 
 const Page = () => {
 
@@ -17,6 +19,8 @@ const Page = () => {
     const [submited, setSubmited] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const { showLoader, hideLoader } = UseLoader();
 
     // 5 minute countdown for otp
     useEffect(() => {
@@ -38,6 +42,7 @@ const Page = () => {
 
     // Request OTP.
     const handleEmailVerification = async () => {
+        showLoader();
         try {
             if (email) {
                 setIsSubmiting(true);
@@ -49,6 +54,7 @@ const Page = () => {
             }
         } catch (err) {
             alert("Failed to send otp");
+            hideLoader();
         } finally {
             setTime(300);
             setIsSubmiting(false);
@@ -57,6 +63,7 @@ const Page = () => {
 
     // Verify OTP
     const handleOtpVerification = async () => {
+        showLoader();
         try {
             const cleanOtp = otp.trim();
             const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify/verify-otp`, { email, otp: cleanOtp });
@@ -67,6 +74,7 @@ const Page = () => {
             setSubmited(true);
             setIsVerifying(false);
         } catch (err) {
+            hideLoader();
             return alert(err.response?.data?.message || "Verification failed");
         }
     }
@@ -80,6 +88,7 @@ const Page = () => {
     // Handle Signup of user
     const handleSignup = async (e) => {
         e.preventDefault();
+        showLoader();
 
         const formData = new FormData(e.target);
 
@@ -88,8 +97,6 @@ const Page = () => {
         for (let [key, value] of formData.entries()) {
             payload[key] = value.replace(/\s+/g, "");
         }
-
-        delete payload.otp;
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`, {
@@ -119,9 +126,11 @@ const Page = () => {
         }
     }, [isAuthenticated, router]);
 
+
     // Handle Login of User
     const handleLogin = async (e) => {
         e.preventDefault();
+        showLoader();
 
         const formData = new FormData(e.target);
         const payload = {
@@ -140,8 +149,11 @@ const Page = () => {
             const data = await res.json();
             if (res.ok) {
                 useAuthStore.getState().login(data.user.username);
+                showLoader();
+                toast.success("User Loged In Successfully");
             } else {
-                alert(data.message || "Login Failed");
+                hideLoader();
+                toast.error(data.message || "Login Failed");
             }
         } catch (err) {
             console.error("Login krne me error aa rha hai bhai: ", err);
@@ -150,6 +162,7 @@ const Page = () => {
 
     return (
         <div className="text-gray-700 mx-auto px-4 sm:px-6 lg:px-8">
+            <ToastContainer />
             {isLogin ? (
                 <>
                     <h1 className="font-bold text-center text-2xl sm:text-3xl md:text-4xl py-8 NunitoEB">
