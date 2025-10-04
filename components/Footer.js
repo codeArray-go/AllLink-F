@@ -4,17 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import useAuthStore from "@/store/authStore";
+import useThemeStore from "@/store/themeStore";
 
 const Footer = () => {
 
   const { login } = useAuthStore()
+  const { isDarkMode } = useThemeStore();
   const pathname = usePathname();
   const showFooter = ["/", "/generate"].includes(pathname);
   if (!showFooter) return null;
 
   return (
     <>
-      <footer className="mt-10 py-16 w-screen flex flex-col items-center justify-center bg-[#272833] text-white border-x">
+      <footer className={`py-16 w-screen flex flex-col items-center justify-center ${isDarkMode ? 'bg-[#01040c]' : 'bg-[#272833]'} text-white border-x`}>
         <div className="mb-16 flex items-center flex-col justify-center">
           <h1 className="text-3xl NunitoEB font-bold mb-8 text-white"> <span className="text-cyan-700">&lt;</span>AllLinks<span className="text-cyan-700">&#8725;&gt;</span></h1>
           <ul className="flex gap-10 text-[16px] text-[#99a1af] Ruda ">
