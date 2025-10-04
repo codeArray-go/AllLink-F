@@ -4,6 +4,7 @@ import { Rubik } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useAuthStore from "@/store/authStore";
+import useThemeStore from "@/store/themeStore";
 import Image from "next/image";
 
 const rub = Rubik({
@@ -14,6 +15,7 @@ const rub = Rubik({
 export default function Home() {
 
   const { isAuthenticated } = useAuthStore();
+  const { isDarkMode } = useThemeStore();
   const router = useRouter();
   const [text, setText] = useState("");
 
@@ -28,19 +30,19 @@ export default function Home() {
 
 
   return (
-    <main className="pt-10 px-4 sm:px-8 lg:px-16 xl:px-20">
+    <main className="py-10 px-4 sm:px-8 lg:px-16 xl:px-20 bg-transparent">
       <section className="max-w-6xl mx-auto flex flex-col items-center gap-12">
 
         {/* Top Text Section */}
         <div className="flex flex-col items-center gap-6 text-center w-full md:w-3/4">
-          <h1 className="NunitoEB font-extrabold text-slate-700 text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
+          <h1 className={`NunitoEB font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-700'} text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight`}>
             <span className="text-blue-800">A Unified </span>
             link to all,
-            <br className="hidden md:block" /> {/* only break on md and above */}
+            <br className="hidden md:block" />
             essential resource.
           </h1>
 
-          <p className={`text-base sm:text-lg md:text-xl ${rub.className} tracking-[.36px]`}>
+          <p className={`${isDarkMode ? 'text-white' : 'text-gray-800'} text-base sm:text-lg md:text-xl ${rub.className} tracking-[.36px]`}>
             Easily consolidate your digital presence with a single, organized link.
             Share your content, tools, and profiles from platforms like GitHub,
             LinkedIn, YouTube, and more — all in one accessible location.
@@ -52,8 +54,8 @@ export default function Home() {
               value={text}
               onChange={(e) => setText(e.target.value)}
               type="text"
-              className="w-full sm:w-72 bg-gray-200 px-4 py-3 rounded-lg font-medium 
-                     focus:outline-4 focus:outline-green-600"
+              className="w-full sm:w-72 bg-gray-300 px-4 py-3 rounded-lg font-medium 
+                     focus:outline-4 focus:outline-gray-600"
               placeholder="Enter your handle..."
             />
             <button
@@ -71,7 +73,7 @@ export default function Home() {
         </div>
 
         {/* Divider */}
-        <div className="bg-gray-200 w-full h-[1px]" />
+        <div className={`${isDarkMode ? 'bg-gray-200' : 'bg-gray-400'} w-full h-[1px]`} />
 
         {/* Bottom Content Section */}
         <div className="flex flex-col-reverse lg:flex-row w-full gap-10 lg:gap-16 
@@ -91,7 +93,7 @@ export default function Home() {
 
           {/* Right Content */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6 items-center lg:items-start">
-            <h2 className={`${rub.className} text-slate-700 font-semibold 
+            <h2 className={`${rub.className} ${isDarkMode ? 'text-white' : 'text-slate-700'} font-semibold 
                         text-2xl sm:text-3xl md:text-4xl leading-snug`}>
               Ready to begin? Click to generate a single, unified link for all your content.
             </h2>
@@ -124,7 +126,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </main >
 
   );
 }
