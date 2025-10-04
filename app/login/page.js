@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Eye, EyeOff } from "lucide-react";
 import UseLoader from '@/store/loaderStore';
 import { ToastContainer, toast } from "react-toastify";
+import useThemeStore from '@/store/themeStore';
 
 const Page = () => {
 
@@ -19,6 +20,7 @@ const Page = () => {
     const [submited, setSubmited] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const { isDarkMode } = useThemeStore();
 
     const { showLoader, hideLoader } = UseLoader();
 
@@ -161,7 +163,7 @@ const Page = () => {
     }
 
     return (
-        <div className="text-gray-700 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`${isDarkMode ? 'text-white' : 'text-gray-700'} mx-auto px-4 sm:px-6 lg:px-8`}>
             <ToastContainer />
             {isLogin ? (
                 <>
@@ -171,7 +173,7 @@ const Page = () => {
 
                     <form className="w-full max-w-md mx-auto" onSubmit={handleLogin}>
                         <div className="mb-5">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="email" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'} `}>
                                 Your email
                             </label>
                             <input
@@ -186,7 +188,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'} `}
                             >
                                 Password
                             </label>
@@ -231,7 +233,7 @@ const Page = () => {
                     <form className="w-full max-w-2xl mx-auto" onSubmit={handleSignup}>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">
+                                <label htmlFor="username" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                     Username
                                 </label>
                                 <input
@@ -244,7 +246,7 @@ const Page = () => {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="age" className="block mb-2 text-sm font-medium text-gray-900">
+                                <label htmlFor="age" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                     Current age
                                 </label>
                                 <input
@@ -260,7 +262,7 @@ const Page = () => {
 
                         {/* Email Verification */}
                         <div className="mb-6">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="email" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                 Email address
                             </label>
                             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3">
@@ -335,7 +337,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}
                             >
                                 Password
                             </label>
@@ -360,7 +362,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="confirm_password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}
                             >
                                 Confirm Password
                             </label>
@@ -396,8 +398,9 @@ const Page = () => {
                         </span>
                     </p>
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 
 }
